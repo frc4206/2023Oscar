@@ -12,7 +12,7 @@ public class AutoBalanceCloseCommand extends CommandBase {
   public AutoBalanceCloseCommand(SwerveSubsystem m_swervesubsystem) {
     swerveSubsystem = m_swervesubsystem;
     addRequirements(swerveSubsystem);
-  }
+  } 
 
   // Called when the command is initially scheduled.
   @Override
