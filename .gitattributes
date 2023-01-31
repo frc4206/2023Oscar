@@ -1,3 +1,4 @@
+. filter=lfs diff=lfs merge=lfs -text
 /.gradle/7.5.1/executionHistory/executionHistory.bin filter=lfs diff=lfs merge=lfs -text
 /build/jni/release/halsim_ds_socket.pdb filter=lfs diff=lfs merge=lfs -text
 /build/jni/release/halsim_gui.dll filter=lfs diff=lfs merge=lfs -text
