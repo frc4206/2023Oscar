@@ -23,7 +23,6 @@ public final class Constants {
   public static final String Canivore1 = "Canivore1";
 
 
-
   public static final class Claw{
     public static final int clawmotorID = 13;
     public static final int forwardChannel = 1;
@@ -35,7 +34,6 @@ public final class Constants {
   public static final class Arm{
     public static final int armMotorID = 14;
   }
-
 
 
 
