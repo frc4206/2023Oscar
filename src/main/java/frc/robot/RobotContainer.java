@@ -64,7 +64,7 @@ public class RobotContainer {
     boolean openLoop = true;
     swerve.setDefaultCommand(new TeleopSwerve(swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
-
+    //Event Map for "Link" Autos
     linkEventMap1.put("arm1", new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));
     linkEventMap1.put("harvest1", new ClawShifterCommand(claw));
     linkEventMap1.put("arm2", new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));

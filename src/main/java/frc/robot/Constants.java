@@ -34,8 +34,6 @@ public final class Constants {
 
   public static final class Arm{
     public static final int armMotorID = 14;
-    public static final int topLimSwitchChannel = 1;
-    public static final int midLimSwitchChannel = 2;
   }
 
 

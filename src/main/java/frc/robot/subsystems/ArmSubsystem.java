@@ -5,17 +5,17 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
   public static CANSparkMax armMotor = new CANSparkMax(Constants.Arm.armMotorID, MotorType.kBrushless);
-  public static DigitalInput topLimSwitch = new DigitalInput(Constants.Arm.topLimSwitchChannel);
-  public static DigitalInput midLimSwitch = new DigitalInput(Constants.Arm.midLimSwitchChannel);
+  public static RelativeEncoder encoder = armMotor.getEncoder();
+  double encoderPosition = encoder.getPosition();
 
   public ArmSubsystem() {
     armMotor.restoreFactoryDefaults();
@@ -23,14 +23,15 @@ public class ArmSubsystem extends SubsystemBase {
     armMotor.setInverted(false);
   }
 
+  //Temporary until I find actual positions for specific arm positions
   public void ArmTop(){
-    while (!topLimSwitch.get()){
+    while (encoderPosition < 10){
       armMotor.set(0.5);
     }
   }
 
   public void ArmMiddle(){
-    while (!midLimSwitch.get()){
+    while (encoderPosition < 5){
       armMotor.set(0.3);
     }
   }
@@ -38,6 +39,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void ReturnArm(){
     armMotor.set(-0.5);
   }
+  //------------------------------------------------------------------
 
   @Override
   public void periodic() {}
