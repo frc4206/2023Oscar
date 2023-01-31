@@ -1,0 +1,9 @@
+[
+  {
+    "type": "java",
+    "name": "frcJava",
+    "port": 8349,
+    "target": "10.42.6.2",
+    "project": "4206-Oscar"
+  }
+]

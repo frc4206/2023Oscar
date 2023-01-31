@@ -1,0 +1,174 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.81,
+        "y": 4.4071316212807865
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.810000000000005,
+        "y": 4.4071316212807865
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.810266076672505,
+        "y": 4.588496896292039
+      },
+      "prevControl": {
+        "x": 5.794620536609495,
+        "y": 4.5250190500381
+      },
+      "nextControl": {
+        "x": 7.808318655155395,
+        "y": 4.65087518244722
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.81,
+        "y": 4.41
+      },
+      "prevControl": {
+        "x": 4.07825440569626,
+        "y": 4.434241169657371
+      },
+      "nextControl": {
+        "x": 1.5416048375956402,
+        "y": 4.4071316212807865
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.873743922926442,
+        "y": 3.545646564977341
+      },
+      "prevControl": {
+        "x": 6.461968204759783,
+        "y": 4.355472144038435
+      },
+      "nextControl": {
+        "x": 7.145791835443321,
+        "y": 3.0106190036941483
+      },
+      "holonomicAngle": -55.22216863363618,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.81,
+        "y": 2.74
+      },
+      "prevControl": {
+        "x": 1.9884889039891915,
+        "y": 6.419564908910358
+      },
+      "nextControl": {
+        "x": 1.6594922663529539,
+        "y": -0.36273055002250376
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.783061285420817,
+        "y": 2.0040417273817006
+      },
+      "prevControl": {
+        "x": 7.8857255006265445,
+        "y": 2.2245745704228437
+      },
+      "nextControl": {
+        "x": 6.51101337290394,
+        "y": 1.9496321448783258
+      },
+      "holonomicAngle": 23.629377730656802,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.81,
+        "y": 2.74
+      },
+      "prevControl": {
+        "x": 2.1001844400180048,
+        "y": -0.20861462775557105
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": []
+}
