@@ -24,6 +24,12 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   //Temporary until I find actual positions for specific arm positions
+  public void ArmRetrieve(){
+    while (encoderPosition < 20){
+      armMotor.set(0.6);
+    }
+  }
+
   public void ArmTop(){
     while (encoderPosition < 10){
       armMotor.set(0.5);
@@ -33,6 +39,12 @@ public class ArmSubsystem extends SubsystemBase {
   public void ArmMiddle(){
     while (encoderPosition < 5){
       armMotor.set(0.3);
+    }
+  }
+
+  public void ArmLow(){
+    while (encoderPosition < 1){
+      armMotor.set(0.2);
     }
   }
 

@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import frc.robot.commands.Arm.ArmLowCommand;
 import frc.robot.commands.Arm.ArmMiddleCommand;
+import frc.robot.commands.Arm.ArmRetrieveCommand;
 import frc.robot.commands.Arm.ArmTopCommand;
 import frc.robot.commands.Arm.ReturnArmCommand;
 import frc.robot.commands.Claw.ClawShifterCommand;
@@ -84,12 +86,14 @@ public class RobotContainer {
   private void configureBindings() {
     //Swerve Commands
     new JoystickButton(driver, XboxController.Button.kX.value).onTrue(new InstantCommand(() -> swerve.zeroGyro()));
-    new JoystickButton(driver, XboxController.Button.kLeftBumper.value).whileTrue(new AutoBalanceCloseCommand(swerve));
-    new JoystickButton(driver, XboxController.Button.kRightBumper.value).whileTrue(new AutoBalanceFarCommand(swerve));
+    new JoystickButton(driver, XboxController.Axis.kLeftTrigger.value).whileTrue(new AutoBalanceCloseCommand(swerve));
+    new JoystickButton(driver, XboxController.Axis.kRightTrigger.value).whileTrue(new AutoBalanceFarCommand(swerve));
   
     //Arm Commands
-    new JoystickButton(operator, XboxController.Button.kLeftBumper.value).onTrue(new ArmTopCommand(arm));
-    new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value).onTrue(new ArmMiddleCommand(arm));
+    new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value).onTrue(new ArmTopCommand(arm));
+    new JoystickButton(operator, XboxController.Button.kLeftBumper.value).onTrue(new ArmMiddleCommand(arm));
+    new JoystickButton(operator, XboxController.Button.kLeftStick.value).onTrue(new ArmLowCommand(arm));
+    new JoystickButton(operator, XboxController.Axis.kRightTrigger.value).onTrue(new ArmRetrieveCommand(arm));
     new JoystickButton(operator, XboxController.Button.kRightBumper.value).onTrue(new ReturnArmCommand(arm));
   
     //Claw Commands

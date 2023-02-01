@@ -18,6 +18,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public static SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    double[] ypr = new double[3];
+    double currentAngle;
 
     public SwerveSubsystem() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -32,6 +34,8 @@ public class SwerveSubsystem extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        gyro.getYawPitchRoll(ypr);
+        currentAngle = ypr[1];
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -113,20 +117,12 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void AutoBalanceClose(){
-        double[] ypr = new double[3];
-        gyro.getYawPitchRoll(ypr);
-        double currentAngle = ypr[1];
-
         if (currentAngle > 9 || currentAngle < -9){
             Forward();
         }
     }
 
     public void AutoBalanceFar(){
-        double[] ypr = new double[3];
-        gyro.getYawPitchRoll(ypr);
-        double currentAngle = ypr[1];
-
         if (currentAngle > 9 || currentAngle < -9){
             Reverse();
         }
