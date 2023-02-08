@@ -17,21 +17,16 @@ import frc.robot.Constants;
 
 public class ClawSubsystem extends SubsystemBase {
   public static DoubleSolenoid clawPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Claw.forwardChannel, Constants.Claw.reverseChannel);
-  public static CANSparkMax clawMotor = new CANSparkMax(Constants.Claw.clawmotorID, MotorType.kBrushless);
   
   private Compressor compressor = new Compressor(PneumaticsModuleType.REVPH);
   //private AnalogInput pneumaticPressureSensor = new AnalogInput(Constants.Pneumatics.pneumaticPressureSensor);
 
   public ClawSubsystem() {
     compressor.enableDigital();
-    clawMotor.restoreFactoryDefaults();
-    clawMotor.setIdleMode(IdleMode.kBrake);
-    clawMotor.setInverted(false);
   }
 
   public void ClawForward(){
     clawPiston.set(Value.kForward);
-    clawMotor.set(0.7);
   }
 
   public void ClawReverse(){

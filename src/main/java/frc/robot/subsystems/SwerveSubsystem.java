@@ -104,28 +104,78 @@ public class SwerveSubsystem extends SubsystemBase {
 
     //Charge Station AutoBalancing
     //-------------------------------------------------------------------------------------------------------
-    public void Forward(){
-        Translation2d translation = new Translation2d(0, 10).times(Constants.Swerve.maxSpeed-2);
-        double rotation = 0;
-        drive(translation, rotation, true, true);
-    }
-
-    public void Reverse(){
-        Translation2d translation = new Translation2d(0, -10).times(Constants.Swerve.maxSpeed-2);
+  
+    public void BalanceBrake(){
+        Translation2d translation = new Translation2d(0, 0.05).times(Constants.Swerve.maxSpeed);
         double rotation = 0;
         drive(translation, rotation, true, true);
     }
 
     public void AutoBalanceClose(){
-        if (currentAngle > 9 || currentAngle < -9){
-            Forward();
-        }
+        double[] ypr = new double[3];
+        gyro.getYawPitchRoll(ypr);
+        double pitch = ypr[1];
+        double roll = ypr[2];
+
+        double kP = 0.08;
+
+        double errorP = Math.abs(pitch) - 8;
+        double outputP = errorP*kP;
+
+        double errorR = Math.abs(roll) - 8;
+        double outputR = errorR*kP;
+        
+        if (!(pitch < 2 && pitch > -2)){
+            Translation2d translation = new Translation2d(outputP, 0).times(Constants.Swerve.maxSpeed-2);
+            double rotation = 0;
+            drive(translation, rotation, true, true);    
+            return;
+        } 
+
+        if (!(roll < 2 && roll > -2)) {
+            Translation2d translation = new Translation2d(outputR, 0).times(Constants.Swerve.maxSpeed-2);
+            double rotation = 0;
+            drive(translation, rotation, true, true);    
+            return;
+        } 
+        
+        Translation2d translation = new Translation2d(0, 0).times(Constants.Swerve.maxSpeed-2);
+        double rotation = 0;
+        drive(translation, rotation, true, true);    
     }
 
+    
     public void AutoBalanceFar(){
-        if (currentAngle > 9 || currentAngle < -9){
-            Reverse();
-        }
+        double[] ypr = new double[3];
+        gyro.getYawPitchRoll(ypr);
+        double pitch = ypr[1];
+        double roll = ypr[2];
+
+        double kP = 0.08;
+
+        double errorP = Math.abs(pitch) - 8;
+        double outputP = errorP*kP;
+
+        double errorR = Math.abs(roll) - 8;
+        double outputR = errorR*kP;
+        
+        if (!(pitch < 2 && pitch > -2)){
+            Translation2d translation = new Translation2d(-outputP, 0).times(Constants.Swerve.maxSpeed-2);
+            double rotation = 0;
+            drive(translation, rotation, true, true);    
+            return;
+        } 
+
+        if (!(roll < 2 && roll > -2)) {
+            Translation2d translation = new Translation2d(-outputR, 0).times(Constants.Swerve.maxSpeed-2);
+            double rotation = 0;
+            drive(translation, rotation, true, true);    
+            return;
+        } 
+        
+        Translation2d translation = new Translation2d(0, 0).times(Constants.Swerve.maxSpeed-2);
+        double rotation = 0;
+        drive(translation, rotation, true, true);    
     }
     //-------------------------------------------------------------------------------------------------------
 
@@ -136,7 +186,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
         double[] ypr = new double[3];
         gyro.getYawPitchRoll(ypr);
-        SmartDashboard.putNumber("gyro angle", ypr[1]);
+        SmartDashboard.putNumber("Yaw", ypr[0]);
+        SmartDashboard.putNumber("Pitch", ypr[1]);
+        SmartDashboard.putNumber("Roll", ypr[2]);
 
         for (SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

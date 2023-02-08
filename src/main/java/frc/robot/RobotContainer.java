@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Autos.Test_Auto;
 import frc.robot.commands.Arm.ArmLowCommand;
 import frc.robot.commands.Arm.ArmMiddleCommand;
 import frc.robot.commands.Arm.ArmRetrieveCommand;
@@ -12,20 +13,19 @@ import frc.robot.commands.Arm.ReturnArmCommand;
 import frc.robot.commands.Claw.ClawShifterCommand;
 import frc.robot.commands.Swerve.AutoBalanceCloseCommand;
 import frc.robot.commands.Swerve.AutoBalanceFarCommand;
+import frc.robot.commands.Swerve.BalanceBrakeCommand;
 import frc.robot.commands.Swerve.TeleopSwerve;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
@@ -67,17 +67,16 @@ public class RobotContainer {
     swerve.setDefaultCommand(new TeleopSwerve(swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
 
     //Event Map for "Link" Autos
-    linkEventMap1.put("arm1", new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));
-    linkEventMap1.put("harvest1", new ClawShifterCommand(claw));
-    linkEventMap1.put("arm2", new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));
-    linkEventMap1.put("harvest2", new ClawShifterCommand(claw));
-    linkEventMap1.put("arm3", new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));
+    linkEventMap1.put("arm1", new PrintCommand("new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));"));
+    linkEventMap1.put("harvest1", new PrintCommand("new ClawShifterCommand(claw));"));
+    linkEventMap1.put("arm2", new PrintCommand("new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));"));
+    linkEventMap1.put("harvest2", new PrintCommand("new ClawShifterCommand(claw));"));
+    linkEventMap1.put("arm3", new PrintCommand("new SequentialCommandGroup(new ArmTopCommand(arm), new ClawShifterCommand(claw), new ReturnArmCommand(arm)));"));
 
     autoChooser.addOption("Link Barrier Side Blue", "Link Barrier Side Blue");
     autoChooser.addOption("Link Barrier Side Red", "Link Barrier Side Red");
     autoChooser.addOption("Link Wall Side Blue", "Link Wall Side Blue");
     autoChooser.addOption("Link Wall Side Red", "Link Wall Side Red");
-
     SmartDashboard.putData("Auto Selector", autoChooser);
 
     configureBindings();
@@ -86,8 +85,9 @@ public class RobotContainer {
   private void configureBindings() {
     //Swerve Commands
     new JoystickButton(driver, XboxController.Button.kX.value).onTrue(new InstantCommand(() -> swerve.zeroGyro()));
-    new JoystickButton(driver, XboxController.Axis.kLeftTrigger.value).whileTrue(new AutoBalanceCloseCommand(swerve));
-    new JoystickButton(driver, XboxController.Axis.kRightTrigger.value).whileTrue(new AutoBalanceFarCommand(swerve));
+    new JoystickButton(driver, XboxController.Button.kLeftBumper.value).whileTrue(new AutoBalanceCloseCommand(swerve));
+    new JoystickButton(driver, XboxController.Button.kRightBumper.value).whileTrue(new AutoBalanceFarCommand(swerve));
+    new JoystickButton(driver, XboxController.Button.kY.value).whileTrue(new BalanceBrakeCommand(swerve));
   
     //Arm Commands
     new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value).onTrue(new ArmTopCommand(arm));
@@ -113,21 +113,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     String selectedpath = autoChooser.getSelected();
-    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup(selectedpath, new PathConstraints(4, 3));
-    
-    SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-        swerve::getPose, 
-        swerve::resetOdometry, 
-        Constants.Swerve.swerveKinematics, 
-        new PIDConstants(Constants.Swerve.driveKP, Constants.Swerve.driveKI, Constants.Swerve.driveKD), 
-        new PIDConstants(Constants.Swerve.angleKP, Constants.Swerve.angleKI, Constants.Swerve.angleKD), 
-        swerve::setModuleStates, 
-        linkEventMap1,
-        true, 
-        swerve 
-    );
-    
-    Command fullAuto = autoBuilder.fullAuto(pathGroup);
-    return fullAuto;
+    PathPlannerTrajectory traj = PathPlanner.loadPath(selectedpath, new PathConstraints(1.5, 0.75));    
+    FollowPathWithEvents command = new FollowPathWithEvents(new Test_Auto(swerve), traj.getMarkers(), linkEventMap1);
+    return command;
   }
 }

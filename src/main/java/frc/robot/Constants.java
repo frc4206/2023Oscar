@@ -127,7 +127,7 @@ public final class Constants {
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-        public static final int driveMotorID = 1;
+        public static final int driveMotorID = 13;
         public static final int angleMotorID = 2;
         public static final int canCoderID = 12;
         public static double angleOffset = 263.16;
