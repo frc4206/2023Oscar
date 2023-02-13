@@ -5,18 +5,16 @@
 package frc.robot;
 
 import frc.robot.Autos.Test_Auto;
-import frc.robot.commands.Arm.ArmLowCommand;
-import frc.robot.commands.Arm.ArmMiddleCommand;
-import frc.robot.commands.Arm.ArmRetrieveCommand;
-import frc.robot.commands.Arm.ArmTopCommand;
-import frc.robot.commands.Arm.ReturnArmCommand;
-import frc.robot.commands.Claw.ClawShifterCommand;
+import frc.robot.commands.Combos.ArmLow;
+import frc.robot.commands.Combos.ArmMiddle;
+import frc.robot.commands.Combos.ArmRetrieve;
+import frc.robot.commands.Combos.ArmReturn;
+import frc.robot.commands.Combos.ArmTop;
 import frc.robot.commands.Swerve.AutoBalanceCloseCommand;
 import frc.robot.commands.Swerve.AutoBalanceFarCommand;
 import frc.robot.commands.Swerve.BalanceBrakeCommand;
 import frc.robot.commands.Swerve.TeleopSwerve;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import java.util.HashMap;
@@ -53,8 +51,6 @@ public class RobotContainer {
   /* Subsystems */
   private final SwerveSubsystem swerve = new SwerveSubsystem();
   private final ArmSubsystem arm = new ArmSubsystem();
-  private final ClawSubsystem claw = new ClawSubsystem();
-
 
   /* Event Maps (Autos) */
   public static Map<String, Command> linkEventMap1 = new HashMap<>();
@@ -89,15 +85,25 @@ public class RobotContainer {
     new JoystickButton(driver, XboxController.Button.kRightBumper.value).whileTrue(new AutoBalanceFarCommand(swerve));
     new JoystickButton(driver, XboxController.Button.kY.value).whileTrue(new BalanceBrakeCommand(swerve));
   
-    //Arm Commands
-    new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value).onTrue(new ArmTopCommand(arm));
-    new JoystickButton(operator, XboxController.Button.kLeftBumper.value).onTrue(new ArmMiddleCommand(arm));
-    new JoystickButton(operator, XboxController.Button.kLeftStick.value).onTrue(new ArmLowCommand(arm));
-    new JoystickButton(operator, XboxController.Axis.kRightTrigger.value).onTrue(new ArmRetrieveCommand(arm));
-    new JoystickButton(operator, XboxController.Button.kRightBumper.value).onTrue(new ReturnArmCommand(arm));
+
+
+    //Combo Commands
+    new JoystickButton(operator, XboxController.Axis.kLeftTrigger.value).onTrue(new ArmTop(arm));
+    new JoystickButton(operator, XboxController.Button.kLeftBumper.value).onTrue(new ArmMiddle(arm));
+    new JoystickButton(operator, XboxController.Button.kLeftStick.value).onTrue(new ArmLow(arm));
+    new JoystickButton(operator, XboxController.Axis.kRightTrigger.value).onTrue(new ArmRetrieve(arm));
+    new JoystickButton(operator, XboxController.Button.kRightBumper.value).onTrue(new ArmReturn(arm));
   
-    //Claw Commands
-    new JoystickButton(operator, XboxController.Button.kX.value).onTrue(new ClawShifterCommand(claw));
+    
+    
+    //Manual Commands
+    //Arm Commands
+    /* 
+    ^ new JoystickButton(operator, XboxController.Button.kY.value).onTrue(new ArmUpManual(arm));
+    ^ new JoystickButton(operator, XboxController.Button.kA.value).onTrue(new ArmDownManual(arm));
+    
+    Claw Commands
+    ^ new JoystickButton(operator, XboxController.Button.kB.value).onTrue(new ClawShifterCommand(claw));*/
   }
 
   public void setRumble(){
